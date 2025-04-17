@@ -64,11 +64,8 @@ export default class AccountListPagination extends NavigationMixin(LightningElem
     }
 
     handleRowAction(event){
-        console.log('Action');
         const recordId = event.detail.row.Id;
         const actionName = event.detail.action.name;
-
-        console.log(recordId, actionName);
         
         const pageRef = {
             type: 'standard__recordPage',
