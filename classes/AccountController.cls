@@ -17,4 +17,23 @@ public with sharing class AccountController {
             throw new AuraHandledException(e.getMessage());
         }
     }
+
+    @AuraEnabled(cacheable=true)
+    public static List<Account> getAccountsPagination(Integer pageSize, Integer currentPage) {
+        Integer offset = (currentPage - 1) * pageSize;
+
+        return [
+            SELECT Id, Name, Industry 
+            FROM Account
+            LIMIT :pageSize
+            OFFSET :offset
+        ];
+    }
+
+    @AuraEnabled(cacheable=true)
+    public static Integer numberOfAccounts(){
+        return [
+            SELECT COUNT() FROM Account
+        ];
+    }
 }
