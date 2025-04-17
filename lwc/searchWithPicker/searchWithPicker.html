@@ -1,0 +1,22 @@
+<template>
+    <article class="slds-box slds-theme_default">
+        <lightning-record-picker 
+            label="Search"
+            placeholder="Search by name..."
+            object-api-name="Contact"
+            onchange={handleRecordSelect}
+        ></lightning-record-picker>
+        <section class="slds-box slds-var-m-top_medium">
+            <template lwc:if={isRecord}>
+                <lightning-record-form
+                    object-api-name="Contact"
+                    record-id={recordId}
+                    fields={fields}
+                ></lightning-record-form>
+            </template>
+            <template lwc:else>
+                <p class="slds-text-align_center">Contact not found.</p>
+            </template>
+        </section>
+    </article>
+</template>
