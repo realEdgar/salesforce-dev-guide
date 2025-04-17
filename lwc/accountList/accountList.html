@@ -1,0 +1,16 @@
+<template>
+    <article class="slds-box slds-theme_default">
+        <lightning-datatable
+            key-field="Id"
+            data={data}
+            columns={columns}
+            onrowaction={handleRowAction}
+            hide-checkbox-column
+        ></lightning-datatable>
+        <template lwc:if={notAccountData}>
+            <section class="slds-align_absolute-center slds-var-p-around_large">
+                <span>No accounts found</span>
+            </section>
+        </template>
+    </article>
+</template>
