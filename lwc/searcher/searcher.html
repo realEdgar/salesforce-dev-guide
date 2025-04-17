@@ -1,0 +1,25 @@
+<template>
+    <article class="slds-box slds-theme_default">
+        <lightning-input 
+            type="search" 
+            label="Search" 
+            onkeyup={handleKeyup} 
+            placeholder="Search by name..." 
+            value={inputValue}
+        ></lightning-input>
+        <template lwc:if={isResult}>
+            <template for:each={contacts.data} for:item="contact">
+                <article key={contact.Id} class="slds-box slds-theme_shade slds-var-m-vertical_small">
+                    <h1 class="slds-text-align_center">{contact.Name}</h1>
+                    <p class="slds-text-align_center">{contact.Phone}</p>
+                    <p class="slds-text-align_center">{contact.Email}</p>
+                </article>
+            </template>            
+        </template>
+        <template lwc:else>
+            <p class="slds-box slds-var-m-top_medium slds-text-align_center">
+                Contact not found.
+            </p>
+        </template>
+    </article>
+</template>
