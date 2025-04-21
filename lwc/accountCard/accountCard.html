@@ -1,14 +1,14 @@
 <template>
-    <article class="slds-card slds-var-p-around_medium" onclick={handleSelectedAccount}>
+    <article class="slds-box slds-theme_shade" onclick={handleSelectedAccount}>
         <h1 class="slds-text-align_center slds-truncate">
             {account.Name}
         </h1>
-        <p class="slds-var-m-around_xx-small">Phone: {account.Phone}</p>
-        <p class="slds-var-m-around_xx-small">Rating: {account.Rating}</p>
-        <p class="slds-var-m-around_xx-small">Industry: {account.Industry}</p>
-        <p class="slds-var-m-around_xx-small">Annual Revenue: {account.AnnualRevenue}</p>
-        <p class="slds-var-m-around_xx-small">Customer Priority: {account.CustomerPriority__c}</p>
-        <p class="slds-var-m-around_xx-small">Type: {account.Type}</p>
-        <p class="slds-var-m-around_xx-small">Account Number: {account.AccountNumber}</p>
+        <p class="slds-var-m-around_xx-small" lwc:if={account.Phone}>Phone: {account.Phone}</p>
+        <p class="slds-var-m-around_xx-small" lwc:if={account.Rating}>Rating: {account.Rating}</p>
+        <p class="slds-var-m-around_xx-small" lwc:if={account.Industry}>Industry: {account.Industry}</p>
+        <p class="slds-var-m-around_xx-small" lwc:if={account.AnnualRevenue}>Annual Revenue: {account.AnnualRevenue}</p>
+        <p class="slds-var-m-around_xx-small" lwc:if={account.CustomerPriority__c}>Customer Priority: {account.CustomerPriority__c}</p>
+        <p class="slds-var-m-around_xx-small" lwc:if={account.Type}>Type: {account.Type}</p>
+        <p class="slds-var-m-around_xx-small" lwc:if={account.AccountNumber}>Account Number: {account.AccountNumber}</p>
     </article>
 </template>
