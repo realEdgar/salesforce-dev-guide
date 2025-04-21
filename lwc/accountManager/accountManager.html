@@ -23,7 +23,11 @@
         <div class="slds-var-m-top_small slds-border_top">
             <lightning-tabset active-tab-value="gallery" variant="scoped">
                 <lightning-tab label="Accounts Gallery" value="gallery">
-                    
+                    <section class="slds-var-m-around_medium">
+                        <template for:each={filteredAccounts} for:item="account">
+                            <c-account-card key={account.Id} account={account} onselected={handleSelectedAccount}></c-account-card>
+                        </template>
+                    </section>
                 </lightning-tab>
                 <lightning-tab label="Accounts List" value="accountList">
                     
