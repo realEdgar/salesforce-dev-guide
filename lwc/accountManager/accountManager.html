@@ -30,7 +30,14 @@
                     </section>
                 </lightning-tab>
                 <lightning-tab label="Accounts List" value="accountList">
-                    
+                    <section class="slds-var-m-around_medium">
+                        <lightning-datatable
+                            key-field="Id"
+                            data={filteredAccounts}
+                            columns={columns}
+                            hide-checkbox-column
+                        ></lightning-datatable>
+                    </section>
                 </lightning-tab>
             </lightning-tabset>
         </div>
