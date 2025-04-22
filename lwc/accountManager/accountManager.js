@@ -31,6 +31,10 @@ export default class AccountManager extends LightningElement {
         return this.filteredAccounts.length === 0;
     }
 
+    // Properties for selected account START
+    selectedAccountId;
+    // Properties for selected account END
+
     // combobox building logic START
     @wire(getObjectInfo, { objectApiName: ACCOUNT_OBJ })
     handleObjectInfo({ error, data }) {
@@ -79,4 +83,10 @@ export default class AccountManager extends LightningElement {
         }
     }
     // Filtering and build Gallery and datatable logic END
+
+    // Logic for selected account START
+    handleSelectedAccount(event) {
+        this.selectedAccountId = event.detail.accountId;
+    }
+    // Logic for selected account END
 }
