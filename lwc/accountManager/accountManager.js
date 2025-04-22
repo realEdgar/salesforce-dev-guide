@@ -1,4 +1,7 @@
 import { LightningElement, wire, track } from 'lwc';
+import { updateRecord } from 'lightning/uiRecordApi';
+import { refreshApex } from '@salesforce/apex';
+import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 // Building lightning-combobox options
 import { getObjectInfo, getPicklistValuesByRecordType } from 'lightning/uiObjectInfoApi';
 import ACCOUNT_OBJ from '@salesforce/schema/Account';
@@ -6,13 +9,13 @@ import ACCOUNT_OBJ from '@salesforce/schema/Account';
 // building Gallery and Account List tabs
 import getAccountsByType from '@salesforce/apex/AccountManagerController.getAccountsByType';
 const COLUMNS = [
-    { label: 'Account Name', fieldName: 'Name', type: 'text' },
-    { label: 'Rating', fieldName: 'Rating', type: 'text' },
-    { label: 'Industry', fieldName: 'Industry', type: 'text' },
-    { label: 'Annual Revenue', fieldName: 'AnnualRevenue', type: 'currency' },
-    { label: 'Customer Priority', fieldName: 'CustomerPriority__c', type: 'text' },
-    { label: 'Type', fieldName: 'Type', type: 'text' },
-    { label: 'Account Number', fieldName: 'AccountNumber', type: 'text' },
+    { label: 'Account Name', fieldName: 'Name', type: 'text', editable: true },
+    { label: 'Rating', fieldName: 'Rating', type: 'text', editable: true },
+    { label: 'Industry', fieldName: 'Industry', type: 'text', editable: true },
+    { label: 'Annual Revenue', fieldName: 'AnnualRevenue', type: 'currency', editable: true },
+    { label: 'Customer Priority', fieldName: 'CustomerPriority__c', type: 'text', editable: true },
+    { label: 'Type', fieldName: 'Type', type: 'text', editable: true },
+    { label: 'Account Number', fieldName: 'AccountNumber', type: 'text', editable: true },
 ];
 
 export default class AccountManager extends LightningElement {
@@ -25,6 +28,8 @@ export default class AccountManager extends LightningElement {
     // Gallery and datatable properties START
     filteredAccounts = [];
     columns = COLUMNS;
+    draftValues = [];
+    wiredAccounts;
     // Gallery and datatable properties END
 
     get noData() {
@@ -75,7 +80,9 @@ export default class AccountManager extends LightningElement {
 
     // Filtering and build Gallery and datatable logic START
     @wire(getAccountsByType, { accountType: '$value'})
-    handleAccountsByType({ error, data }){
+    handleAccountsByType(res){
+        this.wiredAccounts = res;
+        const { error, data } = res;
         if(data) {
             this.filteredAccounts = data;
         } else if(error) {
@@ -89,4 +96,30 @@ export default class AccountManager extends LightningElement {
         this.selectedAccountId = event.detail.accountId;
     }
     // Logic for selected account END
+
+    // Save records in inline edition START
+    async handleSave(event) {
+        this.draftValues = event.detail.draftValues;
+
+        const toUpdatePromises = this.draftValues.map(field => {
+            const fields = { ...field }
+            return updateRecord({ fields });
+        });
+
+        Promise.all(toUpdatePromises)
+        .then((result) => {
+            const toast = new ShowToastEvent({
+                title: 'Success!',
+                message: 'Records updated successfully',
+                variant: 'success'
+            });
+
+            this.dispatchEvent(toast);
+            refreshApex(this.wiredAccounts);
+        }).catch(error => console.error(error))
+        .finally(() => {
+            this.draftValues = [];
+        })
+    }
+    // Save records in inline edition START
 }

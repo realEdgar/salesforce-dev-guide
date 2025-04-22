@@ -45,6 +45,8 @@
                             data={filteredAccounts}
                             columns={columns}
                             hide-checkbox-column
+                            draft-values={draftValues}
+                            onsave={handleSave}
                         ></lightning-datatable>
                         <template lwc:if={noData}>
                             <p class="slds-var-p-around_large slds-text-align_center">
