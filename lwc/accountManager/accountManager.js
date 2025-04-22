@@ -27,6 +27,10 @@ export default class AccountManager extends LightningElement {
     columns = COLUMNS;
     // Gallery and datatable properties END
 
+    get noData() {
+        return this.filteredAccounts.length === 0;
+    }
+
     // combobox building logic START
     @wire(getObjectInfo, { objectApiName: ACCOUNT_OBJ })
     handleObjectInfo({ error, data }) {

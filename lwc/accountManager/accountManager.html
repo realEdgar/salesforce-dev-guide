@@ -24,10 +24,17 @@
             <lightning-tabset active-tab-value="gallery" variant="scoped">
                 <lightning-tab label="Accounts Gallery" value="gallery">
                     <lightning-layout horizontal-align="space" multiple-rows>
-                        <template for:each={filteredAccounts} for:item="account">
-                            <lightning-layout-item key={account.Id} size="3" padding="around-small">
-                                <c-account-card  account={account} onselected={handleSelectedAccount}></c-account-card>
-                            </lightning-layout-item>
+                        <template lwc:if={noData}>
+                            <p class="slds-var-p-around_large slds-text-align_center">
+                                Not Data Found
+                            </p>
+                        </template>
+                        <template lwc:else>
+                            <template for:each={filteredAccounts} for:item="account">
+                                <lightning-layout-item key={account.Id} size="3" padding="around-small">
+                                    <c-account-card  account={account} onselected={handleSelectedAccount}></c-account-card>
+                                </lightning-layout-item>
+                            </template>
                         </template>
                     </lightning-layout>
                 </lightning-tab>
@@ -39,6 +46,11 @@
                             columns={columns}
                             hide-checkbox-column
                         ></lightning-datatable>
+                        <template lwc:if={noData}>
+                            <p class="slds-var-p-around_large slds-text-align_center">
+                                Not Data Found
+                            </p>
+                        </template>
                     </section>
                 </lightning-tab>
             </lightning-tabset>
