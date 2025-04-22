@@ -2,6 +2,7 @@ import { LightningElement, wire, track } from 'lwc';
 import { updateRecord } from 'lightning/uiRecordApi';
 import { refreshApex } from '@salesforce/apex';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
+import { NavigationMixin } from 'lightning/navigation';
 // Building lightning-combobox options
 import { getObjectInfo, getPicklistValuesByRecordType } from 'lightning/uiObjectInfoApi';
 import ACCOUNT_OBJ from '@salesforce/schema/Account';
@@ -18,7 +19,7 @@ const COLUMNS = [
     { label: 'Account Number', fieldName: 'AccountNumber', type: 'text', editable: true },
 ];
 
-export default class AccountManager extends LightningElement {
+export default class AccountManager extends NavigationMixin(LightningElement) {
     // combobox properties START
     defaultRecordType;
     value;
@@ -121,5 +122,18 @@ export default class AccountManager extends LightningElement {
             this.draftValues = [];
         })
     }
-    // Save records in inline edition START
+    // Save records in inline edition END
+
+    // Create Account Logic START
+    handleNewAccount() {
+        const pageReference = {
+            type: 'standard__objectPage',
+            attributes: {
+                objectApiName: 'Account',
+                actionName: 'new'
+            }
+        }
+        this[NavigationMixin.Navigate](pageReference);
+    }
+    // Create Account Logic END
 }
