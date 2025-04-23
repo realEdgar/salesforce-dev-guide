@@ -7,6 +7,10 @@ import { NavigationMixin } from 'lightning/navigation';
 import { getObjectInfo, getPicklistValuesByRecordType } from 'lightning/uiObjectInfoApi';
 import ACCOUNT_OBJ from '@salesforce/schema/Account';
 
+// import comunication modules: sub, channel, etc.
+import { publish, MessageContext } from 'lightning/messageService';
+import ACCOUNT_MANAGER_CHANNEL from '@salesforce/messageChannel/AccountManagerChannel__c';
+
 // building Gallery and Account List tabs
 import getAccountsByType from '@salesforce/apex/AccountManagerController.getAccountsByType';
 const COLUMNS = [
@@ -93,8 +97,15 @@ export default class AccountManager extends NavigationMixin(LightningElement) {
     // Filtering and build Gallery and datatable logic END
 
     // Logic for selected account START
+    @wire(MessageContext)
+    context;
+
     handleSelectedAccount(event) {
         this.selectedAccountId = event.detail.accountId;
+        const message = {
+            recordId: this.selectedAccountId
+        }
+        publish(this.context, ACCOUNT_MANAGER_CHANNEL, message);
     }
     // Logic for selected account END
 
