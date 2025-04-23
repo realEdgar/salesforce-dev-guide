@@ -1,0 +1,22 @@
+<template>
+    <article class="slds-card slds-var-p-around_small">
+        <template lwc:if={accountId}>
+            <div class="slds-box">
+                <div class="slds-text-align_right">
+                    <lightning-button variant="base" label="View All Details" onclick={handleViewDetailsNavigation}></lightning-button>
+                </div>
+                <lightning-record-form
+                    layout-type="Compact"
+                    object-api-name={objectApiName}
+                    record-id={accountId}
+                    fields={fields}
+                ></lightning-record-form>
+            </div>
+        </template>
+        <template lwc:else>
+            <p class="slds-box slds-text-align_center">
+                Not account selected.
+            </p>
+        </template>
+    </article>
+</template>
