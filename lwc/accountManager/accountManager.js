@@ -107,7 +107,7 @@ export default class AccountManager extends NavigationMixin(LightningElement) {
 
     handleSelectedAccount(event) {
         this.selectedAccountId = event.detail.accountId;
-        publishAccount(this.selectedAccountId);
+        this.publishAccount(this.selectedAccountId);
     }
     // Logic for selected account END
 
