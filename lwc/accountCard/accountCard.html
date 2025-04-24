@@ -1,6 +1,6 @@
 <template>
-    <article class="slds-box slds-theme_shade" onclick={handleSelectedAccount}>
-        <h1 class="slds-text-align_center slds-truncate">
+    <article class="slds-box slds-theme_shade" >
+        <h1 class="slds-text-align_center slds-text-title_bold slds-truncate slds-var-m-bottom_small">
             {account.Name}
         </h1>
         <p class="slds-var-m-around_xx-small" lwc:if={account.Phone}>Phone: {account.Phone}</p>
@@ -10,5 +10,8 @@
         <p class="slds-var-m-around_xx-small" lwc:if={account.CustomerPriority__c}>Customer Priority: {account.CustomerPriority__c}</p>
         <p class="slds-var-m-around_xx-small" lwc:if={account.Type}>Type: {account.Type}</p>
         <p class="slds-var-m-around_xx-small" lwc:if={account.AccountNumber}>Account Number: {account.AccountNumber}</p>
+        <footer class="slds-align_absolute-center slds-var-m-top_small">
+            <lightning-button variant="base" label="View" onclick={handleSelectedAccount}></lightning-button>
+        </footer>
     </article>
 </template>
