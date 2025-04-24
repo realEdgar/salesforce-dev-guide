@@ -13,6 +13,10 @@ import ACCOUNT_MANAGER_CHANNEL from '@salesforce/messageChannel/AccountManagerCh
 
 // building Gallery and Account List tabs
 import getAccountsByType from '@salesforce/apex/AccountManagerController.getAccountsByType';
+const ACTIONS = [
+    { label: 'View', name: 'view'},
+    { label: 'Edit', name: 'edit'}
+];
 const COLUMNS = [
     { label: 'Account Name', fieldName: 'Name', type: 'text', editable: true },
     { label: 'Rating', fieldName: 'Rating', type: 'text', editable: true },
@@ -21,6 +25,7 @@ const COLUMNS = [
     { label: 'Customer Priority', fieldName: 'CustomerPriority__c', type: 'text', editable: true },
     { label: 'Type', fieldName: 'Type', type: 'text', editable: true },
     { label: 'Account Number', fieldName: 'AccountNumber', type: 'text', editable: true },
+    { type: 'action', typeAttributes: { rowActions: ACTIONS } }
 ];
 
 export default class AccountManager extends NavigationMixin(LightningElement) {
@@ -102,10 +107,7 @@ export default class AccountManager extends NavigationMixin(LightningElement) {
 
     handleSelectedAccount(event) {
         this.selectedAccountId = event.detail.accountId;
-        const message = {
-            recordId: this.selectedAccountId
-        }
-        publish(this.context, ACCOUNT_MANAGER_CHANNEL, message);
+        publishAccount(this.selectedAccountId);
     }
     // Logic for selected account END
 
@@ -147,4 +149,32 @@ export default class AccountManager extends NavigationMixin(LightningElement) {
         this[NavigationMixin.Navigate](pageReference);
     }
     // Create Account Logic END
+    // handleRowAction logic Start
+    handleRowAction(event) {
+        const accountId = event.detail.row.Id;
+        const actionName = event.detail.action.name;
+
+        if(actionName === 'view') {
+            this.publishAccount(accountId);
+        } else if(actionName === 'edit') {
+            const pageReference = {
+                type: 'standard__objectPage',
+                attributes: {
+                    objectApiName: 'Account',
+                    recordId: accountId,
+                    actionName: actionName
+                }
+            }
+            this[NavigationMixin.Navigate](pageReference);
+        }
+    }
+    // handleRowAction logic End
+    // Utils Logic Start
+    publishAccount(accountId) {
+        const message = {
+            recordId: accountId
+        }
+        publish(this.context, ACCOUNT_MANAGER_CHANNEL, message);
+    }
+    // Utils Logic End
 }
