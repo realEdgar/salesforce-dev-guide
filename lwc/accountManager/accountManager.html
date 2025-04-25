@@ -31,7 +31,7 @@
                         </template>
                         <template lwc:else>
                             <template for:each={filteredAccounts} for:item="account">
-                                <lightning-layout-item key={account.Id} size="3" padding="around-small">
+                                <lightning-layout-item key={account.Id} size="4" padding="around-small">
                                     <c-account-card  account={account} onselected={handleSelectedAccount}></c-account-card>
                                 </lightning-layout-item>
                             </template>

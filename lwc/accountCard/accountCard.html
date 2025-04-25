@@ -6,10 +6,10 @@
         <p class="slds-var-m-around_xx-small" lwc:if={account.Phone}>Phone: {account.Phone}</p>
         <p class="slds-var-m-around_xx-small" lwc:if={account.Rating}>Rating: {account.Rating}</p>
         <p class="slds-var-m-around_xx-small" lwc:if={account.Industry}>Industry: {account.Industry}</p>
-        <p class="slds-var-m-around_xx-small" lwc:if={account.AnnualRevenue}>Annual Revenue: {account.AnnualRevenue}</p>
+        <p class="slds-var-m-around_xx-small" lwc:if={account.AnnualRevenue}>Annual Revenue: <lightning-formatted-number value={account.AnnualRevenue} format-style="currency" ></lightning-formatted-number> </p>
         <p class="slds-var-m-around_xx-small" lwc:if={account.CustomerPriority__c}>Customer Priority: {account.CustomerPriority__c}</p>
         <p class="slds-var-m-around_xx-small" lwc:if={account.Type}>Type: {account.Type}</p>
-        <p class="slds-var-m-around_xx-small" lwc:if={account.AccountNumber}>Account Number: {account.AccountNumber}</p>
+        <p class="slds-var-m-around_xx-small" lwc:if={account.AccountNumber}>Account Number: <code>{account.AccountNumber}</code></p>
         <footer class="slds-align_absolute-center slds-var-m-top_small">
             <lightning-button variant="base" label="View" onclick={handleSelectedAccount}></lightning-button>
         </footer>
