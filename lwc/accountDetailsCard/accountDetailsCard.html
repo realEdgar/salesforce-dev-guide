@@ -12,6 +12,14 @@
                     fields={fields}
                 ></lightning-record-form>
             </div>
+            <div class="slds-box slds-var-m-top_small">
+                <lightning-map 
+                    center={center}
+                    list-view="hidden"
+                    map-markers={mapMarkers}
+                    zoom-level="8"
+                ></lightning-map>
+            </div>
         </template>
         <template lwc:else>
             <p class="slds-box slds-text-align_center">
