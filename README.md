@@ -1,20 +1,18 @@
-Challenge X:
-Apex Trigger: Opportunity Line Item Revenue Roll-Up and Discount Logic
+# Apex Trigger: Opportunity Line Item Revenue Roll-Up and Discount Logic
+## Overview
+This Salesforce Apex solution implements a **trigger** on the `OpportunityLineItem` object to manage *revenue roll-up calculations*, enforce custom validation rules, and apply dynamic discounts. The solution is **bulkified**, adheres to Salesforce governor limits, and includes comprehensive test coverage.
 
-Overview
-This Salesforce Apex solution implements a trigger on the OpportunityLineItem object to manage revenue roll-up calculations, enforce custom validation rules, and apply dynamic discounts based on business requirements. The solution is optimized for bulk operations, adheres to Salesforce governor limits, and includes comprehensive test coverage.
+### Features
+- **Revenue Roll-Up**: Updates `Total_Revenue__c` on the parent `Opportunity` based on `OpportunityLineItem` `UnitPrice`.
+- **Custom Validation**: Prevents deletion of `OpportunityLineItem` records for `Closed Won` Opportunities.
+- **Dynamic Discount**: Applies a *10% discount* to `UnitPrice` if `Total_Revenue__c` exceeds $50,000, logged in `Discount_Log__c`.
+- **Error Handling**: Rolls back transactions on failure with user-friendly error messages.
+- **Bulkification**: Handles *200+ records* efficiently.
 
-Features
-Revenue Roll-Up: Calculates the total UnitPrice of all OpportunityLineItem records and updates the Total_Revenue__c field on the parent Opportunity.
+---
 
-Custom Validation: Prevents deletion of OpportunityLineItem records if the parent Opportunity is in the Closed Won stage.
-
-Dynamic Discount: Applies a 10% discount to all OpportunityLineItem UnitPrice values if the Total_Revenue__c exceeds $50,000, logging the discount in the Discount_Log__c custom object.
-
-Error Handling: Ensures robust error handling with transaction rollback and user-friendly error messages.
-
-Bulkification: Optimized to handle 200+ records efficiently without hitting governor limits.
-
+## Repository Structure
+```plaintext
 ├── force-app/main/default/
 │   ├── classes/
 │   │   ├── OpportunityLineItemTriggerHandler.cls
